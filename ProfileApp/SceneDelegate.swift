@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         
-        if let _ = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.image.rawValue) {
+        if let image = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.image.rawValue), !image.isEmpty {
             window.rootViewController = ProfileViewController()
         } else {
             window.rootViewController = CreateProfileViewController()

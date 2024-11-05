@@ -47,6 +47,8 @@ class ProfileViewController: UIViewController {
         return button
     }()
     
+    private let watchSessionManager = WatchSessionManager.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -58,6 +60,7 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadProfileData()
+        sendDataToWatch()
     }
     
     private func configureSubviews() {
@@ -88,7 +91,6 @@ class ProfileViewController: UIViewController {
             editButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             editButton.widthAnchor.constraint(equalToConstant: 50),
             editButton.heightAnchor.constraint(equalToConstant: 50),
-            
         ])
     }
     
@@ -98,10 +100,19 @@ class ProfileViewController: UIViewController {
         if let imageName = defaults.string(forKey: UserDefaultsKeys.ProfileKeys.image.rawValue) {
             profileImage.image = UIImage(named: imageName)
         }
-        
+       
         ageLabel.text = "Возраст: " + (defaults.string(forKey: UserDefaultsKeys.ProfileKeys.age.rawValue) ?? "не указано")
         heightLabel.text = "Рост: " + (defaults.string(forKey: UserDefaultsKeys.ProfileKeys.height.rawValue) ?? "не указано")
         weightLabel.text = "Вес: " + (defaults.string(forKey: UserDefaultsKeys.ProfileKeys.weight.rawValue) ?? "не указано")
+    }
+    
+    private func sendDataToWatch() {
+        let defaults = UserDefaults.standard
+        let age = (defaults.string(forKey: UserDefaultsKeys.ProfileKeys.age.rawValue) ?? "не указано")
+        let height = (defaults.string(forKey: UserDefaultsKeys.ProfileKeys.height.rawValue) ?? "не указано")
+        let weight = (defaults.string(forKey: UserDefaultsKeys.ProfileKeys.weight.rawValue) ?? "не указано")
+        let image = defaults.string(forKey: UserDefaultsKeys.ProfileKeys.image.rawValue) ?? "default"
+        watchSessionManager.sendUserProfileData(imageName: image, age: age, height: height, weight: weight)
     }
     
     @objc
@@ -110,6 +121,5 @@ class ProfileViewController: UIViewController {
         createProfileVC.modalPresentationStyle = .fullScreen
         self.present(createProfileVC, animated: true, completion: nil)
     }
-    
 }
 

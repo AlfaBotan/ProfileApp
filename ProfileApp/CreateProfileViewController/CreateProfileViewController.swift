@@ -103,6 +103,7 @@ class CreateProfileViewController: UIViewController {
         return button
     }()
     
+    private let watchSessionManager = WatchSessionManager.shared
     private let profileImages: [String] = (1..<7).map { "avatar_\($0)" }
     
     private var image: String?
@@ -126,7 +127,7 @@ class CreateProfileViewController: UIViewController {
          weightTextField,
          createButton].forEach({view.addSubview($0)})
         
-        if UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.image.rawValue) != nil {
+        if let image = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.image.rawValue), !image.isEmpty {
             createButton.setTitle("Сохранить", for: .normal)
         } else {
             createButton.setTitle("Создать", for: .normal)
@@ -232,17 +233,19 @@ class CreateProfileViewController: UIViewController {
     
     @objc
     private func createButtonTap() {
-        saveProfileData()
-        
-        if UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.image.rawValue) != nil {
+        print("Нажали на кнопку")
+        if let image = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.image.rawValue), !image.isEmpty {
+            saveProfileData()
             dismiss(animated: true)
         } else {
+            saveProfileData()
             let profileVC = ProfileViewController()
-            
             if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
                 sceneDelegate.setRootViewController(profileVC)
+//                watchSessionManager.sendUserProfileData(imageName: image!, age: age!, height: height!, weight: weight!)
             }
         }
+        
     }
     
 }
