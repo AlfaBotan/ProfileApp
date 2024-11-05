@@ -20,7 +20,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    var image: UIImage?
+    private var image: String?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,14 +41,18 @@ class CustomCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    func setImage(image: UIImage?) {
-        imageView.image = image
+    func setImage(image: String) {
+        imageView.image = UIImage(named: image)
         self.image = image
     }
     
     func resetCell() {
         imageView.image = nil
         image = nil
+    }
+    
+    func getImage() -> String? {
+        return image
     }
     
     required init?(coder: NSCoder) {
