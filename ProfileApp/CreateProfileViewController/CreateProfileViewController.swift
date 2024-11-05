@@ -112,6 +112,7 @@ class CreateProfileViewController: UIViewController {
     private var height: String?
     
     override func viewDidLoad() {
+        print("EDITProfile")
         super.viewDidLoad()
         view.backgroundColor = .white
         configureSubviews()
@@ -242,7 +243,6 @@ class CreateProfileViewController: UIViewController {
             let profileVC = ProfileViewController()
             if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
                 sceneDelegate.setRootViewController(profileVC)
-//                watchSessionManager.sendUserProfileData(imageName: image!, age: age!, height: height!, weight: weight!)
             }
         }
         

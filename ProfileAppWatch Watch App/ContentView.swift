@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-//    @StateObject private var watchSessionManager = WatchSessionManager.shared
+    @StateObject private var watchSessionManager = WatchSessionManager.shared
     @State private var isEditPresented = false
     
     @AppStorage(UserDefaultsKeys.ProfileKeys.age.rawValue) private var age: String = "Не указано"
@@ -44,11 +44,6 @@ struct ContentView: View {
         }
         .sheet(isPresented: $isEditPresented) {
             EditProfileView(isPresented: $isEditPresented)
-                }
+        }
     }
 }
-
-
-//#Preview {
-//    ContentView()
-//}

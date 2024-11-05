@@ -51,10 +51,16 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateProfileData), name: .profileDataDidChange, object: nil)
+        updateProfileData() 
         view.backgroundColor = .white
         configureSubviews()
         addConstraints()
         loadProfileData()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .profileDataDidChange, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,7 +106,7 @@ class ProfileViewController: UIViewController {
         if let imageName = defaults.string(forKey: UserDefaultsKeys.ProfileKeys.image.rawValue) {
             profileImage.image = UIImage(named: imageName)
         }
-       
+        
         ageLabel.text = "Возраст: " + (defaults.string(forKey: UserDefaultsKeys.ProfileKeys.age.rawValue) ?? "не указано")
         heightLabel.text = "Рост: " + (defaults.string(forKey: UserDefaultsKeys.ProfileKeys.height.rawValue) ?? "не указано")
         weightLabel.text = "Вес: " + (defaults.string(forKey: UserDefaultsKeys.ProfileKeys.weight.rawValue) ?? "не указано")
@@ -120,6 +126,12 @@ class ProfileViewController: UIViewController {
         let createProfileVC = CreateProfileViewController()
         createProfileVC.modalPresentationStyle = .fullScreen
         self.present(createProfileVC, animated: true, completion: nil)
+    }
+    
+    @objc private func updateProfileData() {
+        ageLabel.text = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.age.rawValue)
+        heightLabel.text = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.height.rawValue)
+        weightLabel.text = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.weight.rawValue)
     }
 }
 

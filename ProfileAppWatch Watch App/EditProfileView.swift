@@ -10,11 +10,11 @@ import SwiftUI
 import SwiftUI
 
 struct EditProfileView: View {
-    @Binding var isPresented: Bool // Связываем представление с родительским экраном
+    @Binding var isPresented: Bool
     @AppStorage(UserDefaultsKeys.ProfileKeys.age.rawValue) private var age: String = ""
     @AppStorage(UserDefaultsKeys.ProfileKeys.height.rawValue) private var height: String = ""
     @AppStorage(UserDefaultsKeys.ProfileKeys.weight.rawValue) private var weight: String = ""
-
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -29,7 +29,10 @@ struct EditProfileView: View {
                     .padding()
                 
                 Button("Сохранить") {
-                    
+                    let newAge = "Возраст: \(age)"
+                    let newHeight = "Рост: \(height)"
+                    let newWeight = "Вес: \(weight)"
+                    WatchSessionManager.shared.sendUpdatedProfileData(age: newAge, height: newHeight, weight: newWeight)
                     isPresented = false
                 }
                 .padding()

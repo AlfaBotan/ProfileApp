@@ -23,19 +23,32 @@ class WatchSessionManager: NSObject, ObservableObject {
             WCSession.default.activate()
         }
     }
+    
+    func sendUpdatedProfileData(age: String, height: String, weight: String) {
+        if WCSession.default.isReachable {
+            let updatedData: [String: Any] = [
+                "age": age,
+                "height": height,
+                "weight": weight
+            ]
+            WCSession.default.sendMessage(updatedData, replyHandler: nil) { error in
+                print("Ошибка при отправке данных на iPhone: \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 extension WatchSessionManager: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: (any Error)?) {
         if activationState == .activated {
-                print("WCSession активирована успешно.")
-            } else {
-                print("WCSession не активирована. Статус: \(activationState.rawValue)")
-            }
-            
-            if let error = error {
-                print("Ошибка при активации WCSession: \(error.localizedDescription)")
-            }
+            print("WCSession активирована успешно.")
+        } else {
+            print("WCSession не активирована. Статус: \(activationState.rawValue)")
+        }
+        
+        if let error = error {
+            print("Ошибка при активации WCSession: \(error.localizedDescription)")
+        }
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
@@ -56,7 +69,6 @@ extension WatchSessionManager: WCSessionDelegate {
             UserDefaults.standard.set(weight, forKey: UserDefaultsKeys.ProfileKeys.weight.rawValue)
         }
         
-        // Здесь вызываем обновление интерфейса
         DispatchQueue.main.async {
             self.imageName = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.image.rawValue) ?? ""
             self.age = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.age.rawValue) ?? ""
@@ -64,5 +76,5 @@ extension WatchSessionManager: WCSessionDelegate {
             self.weight = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.weight.rawValue) ?? ""
         }
     }
-
+    
 }
