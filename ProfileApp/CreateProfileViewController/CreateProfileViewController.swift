@@ -112,7 +112,6 @@ class CreateProfileViewController: UIViewController {
     private var height: String?
     
     override func viewDidLoad() {
-        print("EDITProfile")
         super.viewDidLoad()
         view.backgroundColor = .white
         configureSubviews()
@@ -234,7 +233,6 @@ class CreateProfileViewController: UIViewController {
     
     @objc
     private func createButtonTap() {
-        print("Нажали на кнопку")
         if let image = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.image.rawValue), !image.isEmpty {
             saveProfileData()
             dismiss(animated: true)

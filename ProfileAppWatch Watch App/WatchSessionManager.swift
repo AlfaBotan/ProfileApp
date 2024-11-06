@@ -52,7 +52,6 @@ extension WatchSessionManager: WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-        print(message)
         if let imageName = message["image"] as? String {
             UserDefaults.standard.set(imageName, forKey: UserDefaultsKeys.ProfileKeys.image.rawValue)
         }

@@ -120,7 +120,6 @@ class ProfileViewController: UIViewController {
         let image = defaults.string(forKey: UserDefaultsKeys.ProfileKeys.image.rawValue) ?? "default"
         
         watchSessionManager.sendUserProfileData(imageName: image, age: age, height: height, weight: weight, completion: { [weak self] error in
-            print("Попали в замыкание")
             guard let self = self else {return}
             guard error != nil else {return}
             
