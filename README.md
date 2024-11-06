@@ -1,6 +1,6 @@
 # ProfileApp - тестовое задание
 ### Скринкаст
-- [Запись функционала]([https://disk.yandex.ru/i/DR5qLGaTsMi30A](https://disk.yandex.com/i/HtSueBb1I2JTsQ))
+[Запись функционала]([https://disk.yandex.ru/i/DR5qLGaTsMi30A](https://disk.yandex.com/i/HtSueBb1I2JTsQ))
 
 # Описание:
 В проекте использованы UIKit, SwiftUI, WatchConnectivity, UserDefaults, NotificationCenter.
