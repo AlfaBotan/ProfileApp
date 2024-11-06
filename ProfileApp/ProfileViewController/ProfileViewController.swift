@@ -63,8 +63,8 @@ class ProfileViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: .profileDataDidChange, object: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         loadProfileData()
         sendDataToWatch()
     }
@@ -118,7 +118,17 @@ class ProfileViewController: UIViewController {
         let height = (defaults.string(forKey: UserDefaultsKeys.ProfileKeys.height.rawValue) ?? "не указано")
         let weight = (defaults.string(forKey: UserDefaultsKeys.ProfileKeys.weight.rawValue) ?? "не указано")
         let image = defaults.string(forKey: UserDefaultsKeys.ProfileKeys.image.rawValue) ?? "default"
-        watchSessionManager.sendUserProfileData(imageName: image, age: age, height: height, weight: weight)
+        
+        watchSessionManager.sendUserProfileData(imageName: image, age: age, height: height, weight: weight, completion: { [weak self] error in
+            print("Попали в замыкание")
+            guard let self = self else {return}
+            guard error != nil else {return}
+            
+            let alert = UIAlertController(title: "Упс!", message: "Данные не были отправлены на ваши appleWatch: \(error?.localizedDescription ?? "")", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Попробовать позже", style: .cancel)
+            alert.addAction(action)
+            self.present(alert, animated: true)
+        })
     }
     
     @objc

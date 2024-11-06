@@ -19,7 +19,7 @@ class WatchSessionManager: NSObject {
         }
     }
     
-    func sendUserProfileData(imageName: String, age: String, height: String, weight: String) {
+    func sendUserProfileData(imageName: String, age: String, height: String, weight: String, completion: @escaping (Error?) -> Void) {
         if WCSession.default.activationState == .activated && WCSession.default.isReachable {
             let userData: [String: Any] = [
                 "image": imageName,
@@ -29,9 +29,11 @@ class WatchSessionManager: NSObject {
             ]
             WCSession.default.sendMessage(userData, replyHandler: nil, errorHandler: { error in
                 print("Ошибка при отправке данных на Apple Watch: \(error)")
+                completion(error)
             })
         } else {
             print("WCSession неактивна или недоступна для передачи.")
+            completion(MessageError.unactiveWCSession)
         }
     }
 }
