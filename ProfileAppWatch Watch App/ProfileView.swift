@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    
     @StateObject private var watchSessionManager = WatchSessionManager.shared
     @State private var isEditPresented = false
     

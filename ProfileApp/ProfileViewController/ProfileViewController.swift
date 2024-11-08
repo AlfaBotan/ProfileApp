@@ -59,10 +59,6 @@ class ProfileViewController: UIViewController {
         loadProfileData()
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: .profileDataDidChange, object: nil)
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         loadProfileData()
@@ -137,10 +133,15 @@ class ProfileViewController: UIViewController {
         self.present(createProfileVC, animated: true, completion: nil)
     }
     
-    @objc private func updateProfileData() {
+    @objc
+    private func updateProfileData() {
         ageLabel.text = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.age.rawValue)
         heightLabel.text = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.height.rawValue)
         weightLabel.text = UserDefaults.standard.string(forKey: UserDefaultsKeys.ProfileKeys.weight.rawValue)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .profileDataDidChange, object: nil)
     }
 }
 

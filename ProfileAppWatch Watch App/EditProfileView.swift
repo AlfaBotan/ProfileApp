@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EditProfileView: View {
+    
     @Binding var isPresented: Bool
     @AppStorage(UserDefaultsKeys.ProfileKeys.age.rawValue) private var age: String = ""
     @AppStorage(UserDefaultsKeys.ProfileKeys.height.rawValue) private var height: String = ""

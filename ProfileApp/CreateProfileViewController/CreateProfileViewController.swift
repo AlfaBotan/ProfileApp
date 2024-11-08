@@ -119,6 +119,8 @@ class CreateProfileViewController: UIViewController {
         setupToHideKeyboardOnTapOnView()
     }
     
+    //MARK: Private func
+
     private func configureSubviews() {
         [supportLable,
          collectionView,
@@ -189,7 +191,7 @@ class CreateProfileViewController: UIViewController {
         }
     }
     
-    func updateCreateButtonState() {
+    private func updateCreateButtonState() {
         if image != nil, weight != nil, height != nil, age != nil {
             createButton.isEnabled = true
             createButton.backgroundColor = .black
@@ -207,6 +209,8 @@ class CreateProfileViewController: UIViewController {
         defaults.set(height, forKey: UserDefaultsKeys.ProfileKeys.height.rawValue)
     }
     
+    //MARK: @OBJC func
+
     @objc
     private func editingChanged(_ sender: UITextField) {
         if sender == ageTextField {
@@ -243,10 +247,10 @@ class CreateProfileViewController: UIViewController {
                 sceneDelegate.setRootViewController(profileVC)
             }
         }
-        
     }
-    
 }
+
+//MARK: UICollectionViewDataSource
 
 extension CreateProfileViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -266,12 +270,16 @@ extension CreateProfileViewController: UICollectionViewDataSource {
     }
 }
 
+//MARK: UICollectionViewDelegate
+
 extension CreateProfileViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         resizeCell()
         updateCreateButtonState()
     }
 }
+
+//MARK: UICollectionViewDelegateFlowLayout
 
 extension CreateProfileViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -283,6 +291,7 @@ extension CreateProfileViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+//MARK: UITextFieldDelegate
 
 extension CreateProfileViewController: UITextFieldDelegate {
     
